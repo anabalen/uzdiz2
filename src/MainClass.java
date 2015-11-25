@@ -95,6 +95,7 @@ public class MainClass {
                 
                 //odvajanje polja u pojedinom retku
                 String[] values = line.split("\t");
+                Boolean errorIspravnostiZapisa = false;
                 
                 //ispitivanje ispravnosti dužine polja
                 if((values[0].length() == 1) && 
@@ -103,10 +104,11 @@ public class MainClass {
                    (values[4].length() == 7)){
                     System.out.println("Ispravan zapis");
                 } else {
-                    System.out.println("Neispravan zapis");
+                    errorIspravnostiZapisa = true;
+                    System.out.println("Neispravan zapis - neispravna dužina polja");
                 }
                 
-                System.out.println(values[0] + " " +  values[1] + " " + values[2] + " " + values[3] + " " + values[4]);
+                System.out.println(values[0] + " " +  values[1] + " " + values[2] + " " + values[3] + " " + values[4] + " " + errorIspravnostiZapisa);
             }
         } catch (FileNotFoundException fnfex) {
             System.out.println("Datoteka nije pronađena");
