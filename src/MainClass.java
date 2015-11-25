@@ -23,11 +23,11 @@ public class MainClass {
         
         String datoteka = args[0];
         
-        ucitajDatoteku(datoteka);
+        this.ucitajDatoteku(datoteka);
         startMenu();
     }
 
-    private static void startMenu() {
+    private void startMenu() {
         System.out.println("\n=================================\n");
         System.out.println("Odaberite sljedeći korak:\n");
         System.out.println("1 - pregled stanja");
@@ -48,30 +48,30 @@ public class MainClass {
         n = reader.nextInt();
         }
         
-        odabir();
+        this.odabir();
     }
 
-    private static void odabir() {
+    private void odabir() {
         switch(n){
             case 1:
                 System.out.println("Odabir 1.");
-                startMenu();
+                this.startMenu();
                 break;
             case 2:
                 System.out.println("Odabir 2.");
-                startMenu();
+                this.startMenu();
                 break;
             case 3:
                 System.out.println("Odabir 3.");
-                startMenu();
+                this.startMenu();
                 break;
             case 4:
                 System.out.println("Odabir 4.");
-                startMenu();
+                this.startMenu();
                 break;
             case 5:
                 System.out.println("Odabir 5.");
-                startMenu();
+                this.startMenu();
                 break;    
             case 0:
                 System.out.println("Odabir 0. Kraj programa.");
@@ -81,7 +81,7 @@ public class MainClass {
         }
     }
 
-    private static void ucitajDatoteku(String datoteka) {
+    private void ucitajDatoteku(String datoteka) {
         BufferedReader in;
         String line;
         try  {
