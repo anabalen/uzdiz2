@@ -3,9 +3,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 
 /**
@@ -107,7 +107,8 @@ public class MainClass {
                     errorIspravnostiZapisa = true;
                     System.out.println("Neispravan zapis - neispravna dužina polja");
                 }
-                
+                     
+               // Element element = new Element(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), , values[4]);
                 System.out.println(values[0] + " " +  values[1] + " " + values[2] + " " + values[3] + " " + values[4] + " " + errorIspravnostiZapisa);
             }
         } catch (FileNotFoundException fnfex) {
