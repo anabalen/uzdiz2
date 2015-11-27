@@ -10,17 +10,18 @@ public class Element {
     private int tip;
     private int sifra;
     private int roditelj;
-    private List<Integer> koordinate;
+    private String[] koordinate;
     private String boja;
+    Boolean errorIspravnostiZapisa;
    
-    public Element(int tipZapisa, int sifraZapisa, int roditelj, List<Integer> koordinate, String boja){
+    public Element(int tipZapisa, int sifraZapisa, int roditelj, String[] koordinate, String boja, Boolean errorIspravnostiZapisa){
       
         this.tip = tipZapisa;
        this.sifra = sifraZapisa;
        this.roditelj = roditelj;
        this.koordinate = koordinate;
        this.boja = boja;
-       
+       this.errorIspravnostiZapisa = errorIspravnostiZapisa;
     }
     
     public Element(){}
@@ -37,12 +38,16 @@ public class Element {
         return roditelj;
     }
 
-    public List<Integer> getKoordinate() {
+    public String[] getKoordinate() {
         return koordinate;
     }
 
     public String getBoja() {
         return boja;
+    }
+    
+    public Boolean getErrorIspravnostiZapisa(){
+        return errorIspravnostiZapisa;
     }
 
     public void setTip(int tip) {
@@ -57,7 +62,7 @@ public class Element {
         this.roditelj = roditelj;
     }
 
-    public void setKoordinate(List<Integer> koordinate) {
+    public void setKoordinate(String[] koordinate) {
         this.koordinate = koordinate;
     }
 
@@ -65,5 +70,8 @@ public class Element {
         this.boja = boja;
     }
     
+    public void setErrorIspravnostiZapisa(Boolean errorIspravnostiZapisa) {
+        this.errorIspravnostiZapisa = errorIspravnostiZapisa;
+    }
  
 }
