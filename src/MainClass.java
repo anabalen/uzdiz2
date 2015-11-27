@@ -3,6 +3,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -84,10 +86,14 @@ public class MainClass {
     private static void ucitajDatoteku(String datoteka) {
         BufferedReader in;
         String line;
+        System.out.println("Ispravni zapisi");
         try  {
-            in = new BufferedReader(new FileReader(datoteka));
+           in = new BufferedReader(new FileReader(datoteka));
             System.out.println("Naziv datoteke: " + datoteka + "\n");
             //čitanje datoteke
+            List<Element> listaElemenata = new ArrayList<Element>();
+            List<Integer> koordinateElementa = new ArrayList<>();
+            
             while((line = in.readLine()) != null)
             {
                 //ispis datoteke
@@ -97,20 +103,37 @@ public class MainClass {
                 String[] values = line.split("\t");
                 Boolean errorIspravnostiZapisa = false;
                 
-                //ispitivanje ispravnosti dužine polja
-                if((values[0].length() == 1) && 
-                   (values[1].length() == 5) && 
-                   (values[2].length() == 5) &&
-                   (values[4].length() == 7)){
-                    System.out.println("Ispravan zapis");
+                String[] koordinate = values[3].split(",");
+             
+                //ispitivanje ispravnosti dužine polja i ispis samo podataka koji imaju ispravnu duzinu polja
+                if((values[0].length() == 1) && (values[1].length() == 5) && (values[2].length() == 5) && (values[4].length() == 7) && (errorIspravnostiZapisa == false)){
+                   
+                    for(int i = 0; i<=koordinate.length-1; i++){
+                    //System.out.println(koordinate[i]);
+                    koordinateElementa.add(Integer.parseInt(koordinate[i]));}
+                    System.out.println(koordinateElementa);
+                    //System.out.println(values[0] + " " +  values[1] + " " + values[2] + " " + values[3] + " " + values[4]);
+               
                 } else {
                     errorIspravnostiZapisa = true;
-                    System.out.println("Neispravan zapis - neispravna dužina polja");
                 }
-                     
-               // Element element = new Element(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), , values[4]);
-                System.out.println(values[0] + " " +  values[1] + " " + values[2] + " " + values[3] + " " + values[4] + " " + errorIspravnostiZapisa);
+                 
+               //ispis neispravnog elementa 
+               /* 
+                if(errorIspravnostiZapisa == true){
+                    System.out.println("Neispravni zapisi");
+                    System.out.println(values[0] + " " +  values[1] + " " + values[2] + " " + values[3] + " " + values[4] + " " + errorIspravnostiZapisa);
+                }
+                       
+                */
+               Element element = new Element(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinateElementa, values[4]);
+               listaElemenata.add(element);
+                
             }
+           
+            //ispis elementa iz liste elementa
+            System.out.println(listaElemenata.get(1).getKoordinate());
+            
         } catch (FileNotFoundException fnfex) {
             System.out.println("Datoteka nije pronađena");
             System.exit(0);
