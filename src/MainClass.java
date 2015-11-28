@@ -29,9 +29,5 @@ public class MainClass {
         handler.ucitajDatoteku();
         handler.startMenu();
     }
-
-  
-
-   
     
 }
