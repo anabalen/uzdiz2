@@ -1,4 +1,7 @@
 
+import Composite.IElement;
+import Composite.JednostavniElement;
+import Composite.SlozeniElement;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -126,6 +129,15 @@ public class DatotekaHandler {
              }
                        
              */
+            
+            switch(Integer.parseInt(values[0]))
+            {
+                case 1: IElement jednostavniElement = new JednostavniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4]); break;
+                case 0: IElement slozeniElement = new SlozeniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4]); break;
+            }
+            //slozeniElement.add(jednostavniElement);
+            
+            
             Element element = new Element(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4], errorIspravnostiZapisa, error, testPoruka);
             listaElemenata.add(element);
 
@@ -148,11 +160,14 @@ public class DatotekaHandler {
             }
 
             //provjera je li prvi element ishodišni
-            if (listaElemenata.get(0).getSifra() == listaElemenata.get(0).getRoditelj()) {
-                listaElemenata.get(0).setTestPoruka("\t Ishodišni element");
-            }
-            else {
-                listaElemenata.get(0).setGreska("Nije ishodišni element");
+           
+            for(int i = 0; i < listaElemenata.size(); i++){
+                if (listaElemenata.get(i).getSifra() == listaElemenata.get(i).getRoditelj() && listaElemenata.get(i).getTip() == 0) {
+                    listaElemenata.get(i).setTestPoruka("Ishodišni element");
+                }
+                else {
+                    listaElemenata.get(i).setTestPoruka("Nije ishodišni element");
+                }
             }
                 
             //provjera ima li više ishodišnih elemenata
