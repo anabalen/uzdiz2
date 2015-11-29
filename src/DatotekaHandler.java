@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -51,7 +52,8 @@ public class DatotekaHandler {
         switch (n) {
             case 1:
                 System.out.println("Odabir 1.");
-                startMenu();
+                pregledStanja();
+                //startMenu();
                 break;
             case 2:
                 System.out.println("Odabir 2.");
@@ -205,6 +207,19 @@ public class DatotekaHandler {
         
         startMenu();
         
+    }
+
+    private void pregledStanja() {
+        for(int i=0; i < listaElemenata.size(); i++){
+            Element elem = listaElemenata.get(i);
+            System.out.println(elem.getTip() + " "
+                                + elem.getSifra() + " "
+                                + elem.getRoditelj() + " "
+                                + Arrays.toString(elem.getKoordinate()) + " "
+                                + elem.getBoja());
+        }
+        
+        startMenu();
     }
     
 }
