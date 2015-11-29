@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -68,7 +67,7 @@ public class DatotekaHandler {
                 break;
             case 5:
                 System.out.println("Odabir 5.");
-                startMenu();
+                dodajDatoteku();
                 break;
             case 0:
                 System.out.println("Odabir 0. Kraj programa.");
@@ -77,7 +76,7 @@ public class DatotekaHandler {
 
         }
     }
-
+        
     public void ucitajDatoteku() {
         BufferedReader fajl;
 
@@ -96,11 +95,14 @@ public class DatotekaHandler {
 
     }
 
-    private void validiraj(BufferedReader in) throws IOException {
+    List<Element> listaElemenata = new ArrayList<Element>();
+    
+    private void validiraj(BufferedReader fajl) throws IOException {
         String line;
-        List<Element> listaElemenata = new ArrayList<Element>();
+        //List<Element> listaElemenata = new ArrayList<Element>();
         List<Integer> sifre = new ArrayList<>();
-        while ((line = in.readLine()) != null) {
+        
+        while ((line = fajl.readLine()) != null) {
             //odvajanje polja u pojedinom retku
             String[] values = line.split("\t");
             Boolean errorIspravnostiZapisa = true;
@@ -129,13 +131,16 @@ public class DatotekaHandler {
              }
                        
              */
-            
-            switch(Integer.parseInt(values[0]))
-            {
-                case 1: IElement jednostavniElement = new JednostavniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4]); break;
-                case 0: IElement slozeniElement = new SlozeniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4]); break;
+
+            if(Integer.parseInt(values[0]) == 0){
+                IElement slozeniElement = new SlozeniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4]);
             }
-            //slozeniElement.add(jednostavniElement);
+            else{
+                IElement jednostavniElement = new JednostavniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4]); 
+            }
+            
+            
+           // slozeniElement.add(jednostavniElement);
             
             
             Element element = new Element(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4], errorIspravnostiZapisa, error, testPoruka);
@@ -185,4 +190,21 @@ public class DatotekaHandler {
             System.out.println(element.getSifra() + " " + element.getErrorIspravnostiZapisa() + " " + element.getGreska() + " " + element.getTestPoruka());
         }
     }
+
+    private void dodajDatoteku() {
+        System.out.println("Unesite naziv nove datoteke: ");
+        
+        //dohvaćanje imena nove datoteke
+        Scanner reader = new Scanner(System.in);
+        String novaDatoteka = reader.nextLine();
+        
+        this.datoteka = novaDatoteka;
+        ucitajDatoteku();
+        
+        System.out.println(this.listaElemenata);
+        
+        startMenu();
+        
+    }
+    
 }
