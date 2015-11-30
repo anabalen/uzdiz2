@@ -20,6 +20,9 @@ public class DatotekaHandler {
     private String datoteka;
     public int n;
     List<Element> listaElemenata = new ArrayList<>();
+    List<IElement> listaSlozenihElemenata = new ArrayList<>();
+    IElement slozeniElement = null;
+    IElement jednostavniElement = null;
 
     public DatotekaHandler(String datoteka) {
         this.datoteka = datoteka;
@@ -109,6 +112,7 @@ public class DatotekaHandler {
             Boolean errorIspravnostiZapisa = true;
             String error = "";
             String testPoruka = "";
+            String[] koordinateRoditelja = null;
 
             String[] koordinate = values[3].split(",");
 
@@ -124,32 +128,19 @@ public class DatotekaHandler {
                 errorIspravnostiZapisa = false;
             }
 
-            //ispis neispravnog elementa 
-               /* 
-             if(errorIspravnostiZapisa == true){
-             System.out.println("Neispravni zapisi");
-             System.out.println(values[0] + " " +  values[1] + " " + values[2] + " " + values[3] + " " + values[4] + " " + errorIspravnostiZapisa);
-             }
-                       
-             */
-            IElement slozeniElement = null;
-            IElement jednostavniElement = null;
-
             if (Integer.parseInt(values[0]) == 0) {
                 slozeniElement = new SlozeniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4]);
-                System.out.println(slozeniElement);
+                listaSlozenihElemenata.add(slozeniElement);
+                // System.out.println(slozeniElement);
+                dodavanjeDjece(2);
+
             } else {
                 jednostavniElement = new JednostavniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4]);
-                if (slozeniElement != null) {
-                    slozeniElement.add(jednostavniElement);
-                    System.out.println(slozeniElement);
-                }
+                dodavanjeDjece(1);
             }
 
-         
-            
-           // slozeniElement.add(jednostavniElement);
-            Element element = new Element(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4], errorIspravnostiZapisa, error, testPoruka);
+            // slozeniElement.add(jednostavniElement);
+            Element element = new Element(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4], errorIspravnostiZapisa, error, testPoruka, koordinateRoditelja);
             listaElemenata.add(element);
 
             //provjera postojji li već element s istom šifrom
@@ -187,10 +178,93 @@ public class DatotekaHandler {
                 }
             }
 
+            //dohvaćanje koordinata roditelja za pojedini element u listi
+            for (int i = 0; i < listaElemenata.size(); i++) {
+                int roditelj = element.getRoditelj();
+                int el1 = listaElemenata.get(i).getSifra();
+                String[] koord = listaElemenata.get(i).getKoordinate();
+                if (el1 == roditelj) {
+                    // System.out.println(Arrays.toString(koord));
+                    element.setKoordinateRoditelja(koord);
+                }
+
+            }
+
+            //provjera je su li koordinate elementa relativne unutar roditeljskog elementa
+            for (int i = 0; i <= koordinate.length - 1; i++) {
+                //System.out.println(Integer.parseInt(koordinate[i]));
+            }
+            int velicina = koordinate.length;
+            //System.out.println(Integer.parseInt(koordinate[0]));
+            koordinateRoditelja = element.getKoordinateRoditelja();
+            //System.out.println(Integer.parseInt(koordinateRoditelja[0]));
+            
+            //provjera je li dijete pravokutnik unutar roditeljskog elementa
+           if (velicina == 4 && ((Integer.parseInt(koordinate[0]) >= Integer.parseInt(koordinateRoditelja[0]))
+                                || (Integer.parseInt(koordinate[0]) <= Integer.parseInt(koordinateRoditelja[2]))
+                                || (Integer.parseInt(koordinate[2]) >= Integer.parseInt(koordinateRoditelja[0]))
+                                || (Integer.parseInt(koordinate[2]) <= Integer.parseInt(koordinateRoditelja[2]))
+                                || (Integer.parseInt(koordinate[1]) >= Integer.parseInt(koordinateRoditelja[1]))
+                                || (Integer.parseInt(koordinate[1]) <= Integer.parseInt(koordinateRoditelja[3]))
+                                || (Integer.parseInt(koordinate[3]) >= Integer.parseInt(koordinateRoditelja[1]))
+                                || (Integer.parseInt(koordinate[3]) <= Integer.parseInt(koordinateRoditelja[3]))
+                   )) {
+                System.out.println("abc");
+            }
+           
+           if (velicina == 3 && (((Integer.parseInt(koordinate[0]) + (Integer.parseInt(koordinate[2]))) >= Integer.parseInt(koordinateRoditelja[0]))
+                                && ((Integer.parseInt(koordinate[0]) + (Integer.parseInt(koordinate[2]))) <= Integer.parseInt(koordinateRoditelja[2]))
+                                || ((Integer.parseInt(koordinate[1]) + (Integer.parseInt(koordinate[2]))) >= Integer.parseInt(koordinateRoditelja[1]))
+                                && ((Integer.parseInt(koordinate[1]) + (Integer.parseInt(koordinate[2]))) <= Integer.parseInt(koordinateRoditelja[3]))
+                   )) {
+                System.out.println("krug");
+            }
+           
+           for(int i=0; i>2; i++){
+               if(velicina == 2*i && ((Integer.parseInt(koordinate[i]) >= Integer.parseInt(koordinateRoditelja[0]))
+                                || (Integer.parseInt(koordinate[i]) <= Integer.parseInt(koordinateRoditelja[2]))
+                                || (Integer.parseInt(koordinate[i+2]) >= Integer.parseInt(koordinateRoditelja[0]))
+                                || (Integer.parseInt(koordinate[i+2]) <= Integer.parseInt(koordinateRoditelja[2]))
+                                || (Integer.parseInt(koordinate[i+1]) >= Integer.parseInt(koordinateRoditelja[1]))
+                                || (Integer.parseInt(koordinate[i+1]) <= Integer.parseInt(koordinateRoditelja[3]))
+                                || (Integer.parseInt(koordinate[i+3]) >= Integer.parseInt(koordinateRoditelja[1]))
+                                || (Integer.parseInt(koordinate[i+3]) <= Integer.parseInt(koordinateRoditelja[3])))){
+                   
+               System.out.println("poliedar");
+               }
+           }
+
+            System.out.println(element.getSifra() + Arrays.toString(element.getKoordinate()) + Arrays.toString(element.getKoordinateRoditelja()));
+
             //ako je roditelj neispravan, i djeca su neispravna - napraviti provjeru
             // svaki element koji je false, a drugi elementi sadrze njega kao roditelja, i njima se mijenja stanje u false
-            System.out.println(element.getSifra() + " " + element.getErrorIspravnostiZapisa() + " " + element.getGreska() + " " + element.getTestPoruka());
+            //System.out.println(element.getSifra() + " " + element.getErrorIspravnostiZapisa() + " " + element.getGreska() + " " + element.getTestPoruka());
         }
+
+    }
+
+    private void dodavanjeDjece(int n) {
+        for (int i = 0; i < listaSlozenihElemenata.size(); i++) {
+            SlozeniElement slozElem = (SlozeniElement) listaSlozenihElemenata.get(i);
+
+            switch (n) {
+                case 1: //dodavanje jednostavnog elementa roditelju
+                    if (slozElem != null && jednostavniElement != null && slozElem.getSifra() == jednostavniElement.getRoditelj()) {
+                        slozElem.add(jednostavniElement);
+                        //System.out.println("dodavanje jednostavnog");
+                    }
+                    break;
+                case 2: //dodavanje složenog elementa roditelju
+                    if (slozElem != null && slozElem.getSifra() == slozeniElement.getRoditelj()) {
+                        slozElem.add(slozeniElement);
+                        //System.out.println("dodavanje slozenog");
+                    }
+                    break;
+            }
+
+            //System.out.println("Struktura roditelja s djecom: " + slozElem.getElementi());
+        }
+
     }
 
     private void dodajDatoteku() {

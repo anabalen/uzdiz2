@@ -64,14 +64,20 @@ public class SlozeniElement implements IElement {
     }
 
     public List<IElement> getElementi() {
-        return elementi;
+        return this.elementi;
     }
+
+    public void setElementi(List<IElement> elementi) {
+        this.elementi = elementi;
+    }
+    
+    
 
   
     @Override
     public void print() {
         System.out.println(sifra + " " + roditelj + " " + koordinate + " " + boja);
-        Iterator<IElement> elementIterator = elementi.iterator();
+        Iterator<IElement> elementIterator = this.elementi.iterator();
         while(elementIterator.hasNext()){
         IElement element = elementIterator.next();
         element.print();
