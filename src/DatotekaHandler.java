@@ -19,6 +19,7 @@ public class DatotekaHandler {
 
     private String datoteka;
     public int n;
+    List<Element> listaElemenata = new ArrayList<>();
 
     public DatotekaHandler(String datoteka) {
         this.datoteka = datoteka;
@@ -78,7 +79,7 @@ public class DatotekaHandler {
 
         }
     }
-        
+
     public void ucitajDatoteku() {
         BufferedReader fajl;
 
@@ -97,13 +98,11 @@ public class DatotekaHandler {
 
     }
 
-    List<Element> listaElemenata = new ArrayList<Element>();
-    
     private void validiraj(BufferedReader fajl) throws IOException {
         String line;
         //List<Element> listaElemenata = new ArrayList<Element>();
         List<Integer> sifre = new ArrayList<>();
-        
+
         while ((line = fajl.readLine()) != null) {
             //odvajanje polja u pojedinom retku
             String[] values = line.split("\t");
@@ -133,18 +132,23 @@ public class DatotekaHandler {
              }
                        
              */
+            IElement slozeniElement = null;
+            IElement jednostavniElement = null;
 
-            if(Integer.parseInt(values[0]) == 0){
-                IElement slozeniElement = new SlozeniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4]);
+            if (Integer.parseInt(values[0]) == 0) {
+                slozeniElement = new SlozeniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4]);
+                System.out.println(slozeniElement);
+            } else {
+                jednostavniElement = new JednostavniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4]);
+                if (slozeniElement != null) {
+                    slozeniElement.add(jednostavniElement);
+                    System.out.println(slozeniElement);
+                }
             }
-            else{
-                IElement jednostavniElement = new JednostavniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4]); 
-            }
-            
+
+         
             
            // slozeniElement.add(jednostavniElement);
-            
-            
             Element element = new Element(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4], errorIspravnostiZapisa, error, testPoruka);
             listaElemenata.add(element);
 
@@ -167,59 +171,55 @@ public class DatotekaHandler {
             }
 
             //provjera je li prvi element ishodišni
-           
-            for(int i = 0; i < listaElemenata.size(); i++){
+            for (int i = 0; i < listaElemenata.size(); i++) {
                 if (listaElemenata.get(i).getSifra() == listaElemenata.get(i).getRoditelj() && listaElemenata.get(i).getTip() == 0) {
                     listaElemenata.get(i).setTestPoruka("Ishodišni element");
-                }
-                else {
+                } else {
                     listaElemenata.get(i).setTestPoruka("Nije ishodišni element");
                 }
             }
-                
+
             //provjera ima li više ishodišnih elemenata
-            for (int i = 1; i < listaElemenata.size(); i++){
+            for (int i = 1; i < listaElemenata.size(); i++) {
                 if (listaElemenata.get(i).getSifra() == listaElemenata.get(i).getRoditelj()) {
                     listaElemenata.get(i).setTestPoruka("\t Opet Ishodišni element");
                     listaElemenata.get(i).setErrorIspravnostiZapisa(false);
                 }
             }
-            
+
             //ako je roditelj neispravan, i djeca su neispravna - napraviti provjeru
             // svaki element koji je false, a drugi elementi sadrze njega kao roditelja, i njima se mijenja stanje u false
-           
-
             System.out.println(element.getSifra() + " " + element.getErrorIspravnostiZapisa() + " " + element.getGreska() + " " + element.getTestPoruka());
         }
     }
 
     private void dodajDatoteku() {
         System.out.println("Unesite naziv nove datoteke: ");
-        
+
         //dohvaćanje imena nove datoteke
         Scanner reader = new Scanner(System.in);
         String novaDatoteka = reader.nextLine();
-        
+
         this.datoteka = novaDatoteka;
         ucitajDatoteku();
-        
+
         System.out.println(this.listaElemenata);
-        
+
         startMenu();
-        
+
     }
 
     private void pregledStanja() {
-        for(int i=0; i < listaElemenata.size(); i++){
+        for (int i = 0; i < listaElemenata.size(); i++) {
             Element elem = listaElemenata.get(i);
             System.out.println(elem.getTip() + " "
-                                + elem.getSifra() + " "
-                                + elem.getRoditelj() + " "
-                                + Arrays.toString(elem.getKoordinate()) + " "
-                                + elem.getBoja());
+                    + elem.getSifra() + " "
+                    + elem.getRoditelj() + " "
+                    + Arrays.toString(elem.getKoordinate()) + " "
+                    + elem.getBoja());
         }
-        
+
         startMenu();
     }
-    
+
 }

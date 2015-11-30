@@ -15,6 +15,7 @@ public class SlozeniElement implements IElement {
     private int roditelj;
     private String[] koordinate;
     private String boja;
+    public List<IElement> elementi;
     
     public SlozeniElement(int tipZapisa, int sifraZapisa, int roditelj, String[] koordinate, String boja){
        
@@ -23,23 +24,23 @@ public class SlozeniElement implements IElement {
        this.roditelj = roditelj;
        this.koordinate = koordinate;
        this.boja = boja;
+       this.elementi = new ArrayList<>();
     }
     
-    List<IElement> elementi = new ArrayList<IElement>();
     
     @Override
     public void add(IElement element) {
-        elementi.add(element);
+        this.elementi.add(element);
     }
 
     @Override
     public void remove(IElement element) {
-        elementi.remove(element);
+        this.elementi.remove(element);
     }
 
     @Override
     public IElement getChild(int i) {
-        return elementi.get(i);
+        return this.elementi.get(i);
     }
 
     @Override
@@ -62,6 +63,11 @@ public class SlozeniElement implements IElement {
         return boja;
     }
 
+    public List<IElement> getElementi() {
+        return elementi;
+    }
+
+  
     @Override
     public void print() {
         System.out.println(sifra + " " + roditelj + " " + koordinate + " " + boja);
