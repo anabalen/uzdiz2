@@ -198,41 +198,90 @@ public class DatotekaHandler {
             //System.out.println(Integer.parseInt(koordinate[0]));
             koordinateRoditelja = element.getKoordinateRoditelja();
             //System.out.println(Integer.parseInt(koordinateRoditelja[0]));
-            
+
             //provjera je li dijete pravokutnik unutar roditeljskog elementa
-           if (velicina == 4 && ((Integer.parseInt(koordinate[0]) >= Integer.parseInt(koordinateRoditelja[0]))
-                                || (Integer.parseInt(koordinate[0]) <= Integer.parseInt(koordinateRoditelja[2]))
-                                || (Integer.parseInt(koordinate[2]) >= Integer.parseInt(koordinateRoditelja[0]))
-                                || (Integer.parseInt(koordinate[2]) <= Integer.parseInt(koordinateRoditelja[2]))
-                                || (Integer.parseInt(koordinate[1]) >= Integer.parseInt(koordinateRoditelja[1]))
-                                || (Integer.parseInt(koordinate[1]) <= Integer.parseInt(koordinateRoditelja[3]))
-                                || (Integer.parseInt(koordinate[3]) >= Integer.parseInt(koordinateRoditelja[1]))
-                                || (Integer.parseInt(koordinate[3]) <= Integer.parseInt(koordinateRoditelja[3]))
-                   )) {
-                System.out.println("abc");
-            }
-           
-           if (velicina == 3 && (((Integer.parseInt(koordinate[0]) + (Integer.parseInt(koordinate[2]))) >= Integer.parseInt(koordinateRoditelja[0]))
-                                && ((Integer.parseInt(koordinate[0]) + (Integer.parseInt(koordinate[2]))) <= Integer.parseInt(koordinateRoditelja[2]))
-                                || ((Integer.parseInt(koordinate[1]) + (Integer.parseInt(koordinate[2]))) >= Integer.parseInt(koordinateRoditelja[1]))
-                                && ((Integer.parseInt(koordinate[1]) + (Integer.parseInt(koordinate[2]))) <= Integer.parseInt(koordinateRoditelja[3]))
-                   )) {
+            if (velicina == 4 && ((Integer.parseInt(koordinate[0]) >= Integer.parseInt(koordinateRoditelja[0]))
+                    && (Integer.parseInt(koordinate[0]) <= Integer.parseInt(koordinateRoditelja[2]))
+                    || (Integer.parseInt(koordinate[2]) >= Integer.parseInt(koordinateRoditelja[0]))
+                    && (Integer.parseInt(koordinate[2]) <= Integer.parseInt(koordinateRoditelja[2]))
+                    || (Integer.parseInt(koordinate[1]) >= Integer.parseInt(koordinateRoditelja[1]))
+                    && (Integer.parseInt(koordinate[1]) <= Integer.parseInt(koordinateRoditelja[3]))
+                    || (Integer.parseInt(koordinate[3]) >= Integer.parseInt(koordinateRoditelja[1]))
+                    && (Integer.parseInt(koordinate[3]) <= Integer.parseInt(koordinateRoditelja[3])))) {
+                System.out.println("pravokutnik");
+            } else if (velicina == 3 && (((Integer.parseInt(koordinate[0]) + (Integer.parseInt(koordinate[2]))) >= Integer.parseInt(koordinateRoditelja[0]))
+                    && ((Integer.parseInt(koordinate[0]) - (Integer.parseInt(koordinate[2]))) <= Integer.parseInt(koordinateRoditelja[2]))
+                    || ((Integer.parseInt(koordinate[1]) + (Integer.parseInt(koordinate[2]))) >= Integer.parseInt(koordinateRoditelja[1]))
+                    && ((Integer.parseInt(koordinate[1]) - (Integer.parseInt(koordinate[2]))) <= Integer.parseInt(koordinateRoditelja[3])))) {
                 System.out.println("krug");
+            } else {
+                for (int i = 0; i > 2; i++) {
+                    if (velicina == 2 * i && ((Integer.parseInt(koordinate[i]) >= Integer.parseInt(koordinateRoditelja[0]))
+                            || (Integer.parseInt(koordinate[i]) <= Integer.parseInt(koordinateRoditelja[2]))
+                            || (Integer.parseInt(koordinate[i + 2]) >= Integer.parseInt(koordinateRoditelja[0]))
+                            || (Integer.parseInt(koordinate[i + 2]) <= Integer.parseInt(koordinateRoditelja[2]))
+                            || (Integer.parseInt(koordinate[i + 1]) >= Integer.parseInt(koordinateRoditelja[1]))
+                            || (Integer.parseInt(koordinate[i + 1]) <= Integer.parseInt(koordinateRoditelja[3]))
+                            || (Integer.parseInt(koordinate[i + 3]) >= Integer.parseInt(koordinateRoditelja[1]))
+                            || (Integer.parseInt(koordinate[i + 3]) <= Integer.parseInt(koordinateRoditelja[3])))) {
+
+                        System.out.println("poliedar");
+                    }
+                }
+                
+                System.out.println("Nije unutar roditelja");
             }
-           
-           for(int i=0; i>2; i++){
-               if(velicina == 2*i && ((Integer.parseInt(koordinate[i]) >= Integer.parseInt(koordinateRoditelja[0]))
-                                || (Integer.parseInt(koordinate[i]) <= Integer.parseInt(koordinateRoditelja[2]))
-                                || (Integer.parseInt(koordinate[i+2]) >= Integer.parseInt(koordinateRoditelja[0]))
-                                || (Integer.parseInt(koordinate[i+2]) <= Integer.parseInt(koordinateRoditelja[2]))
-                                || (Integer.parseInt(koordinate[i+1]) >= Integer.parseInt(koordinateRoditelja[1]))
-                                || (Integer.parseInt(koordinate[i+1]) <= Integer.parseInt(koordinateRoditelja[3]))
-                                || (Integer.parseInt(koordinate[i+3]) >= Integer.parseInt(koordinateRoditelja[1]))
-                                || (Integer.parseInt(koordinate[i+3]) <= Integer.parseInt(koordinateRoditelja[3])))){
-                   
-               System.out.println("poliedar");
-               }
-           }
+            
+            
+            //provjera siječe li dijete element roditelja
+            if (velicina == 4 && ((Integer.parseInt(koordinate[0]) < Integer.parseInt(koordinateRoditelja[0]))
+                    && (Integer.parseInt(koordinate[2]) > Integer.parseInt(koordinateRoditelja[0]))
+                    && (Integer.parseInt(koordinate[2]) <= Integer.parseInt(koordinateRoditelja[2]))
+                    || (Integer.parseInt(koordinate[0]) >= Integer.parseInt(koordinateRoditelja[0]))
+                    &&  (Integer.parseInt(koordinate[0])< Integer.parseInt(koordinateRoditelja[2]))
+                    && (Integer.parseInt(koordinate[2]) > Integer.parseInt(koordinateRoditelja[2]))
+                    )) {
+                System.out.println("siječe x os");
+            }
+            
+            if (velicina == 4 && ((Integer.parseInt(koordinate[1]) < Integer.parseInt(koordinateRoditelja[1]))
+                    && (Integer.parseInt(koordinate[3]) > Integer.parseInt(koordinateRoditelja[1]))
+                    && (Integer.parseInt(koordinate[3]) <= Integer.parseInt(koordinateRoditelja[3]))
+                    || (Integer.parseInt(koordinate[1]) >= Integer.parseInt(koordinateRoditelja[1]))
+                    &&  (Integer.parseInt(koordinate[1])< Integer.parseInt(koordinateRoditelja[3]))
+                    && (Integer.parseInt(koordinate[3]) > Integer.parseInt(koordinateRoditelja[3]))
+                    )) {
+                System.out.println("siječe y os");
+            }
+            
+            if (velicina == 4 && ((Integer.parseInt(koordinate[0]) < Integer.parseInt(koordinateRoditelja[0]))
+                    && (Integer.parseInt(koordinate[2]) > Integer.parseInt(koordinateRoditelja[0]))
+                    && (Integer.parseInt(koordinate[2]) <= Integer.parseInt(koordinateRoditelja[2]))
+                    && (Integer.parseInt(koordinate[1]) < Integer.parseInt(koordinateRoditelja[1]))
+                    &&  (Integer.parseInt(koordinate[3])> Integer.parseInt(koordinateRoditelja[1]))
+                    && (Integer.parseInt(koordinate[3]) <= Integer.parseInt(koordinateRoditelja[3]))
+                    || (Integer.parseInt(koordinate[0]) >= Integer.parseInt(koordinateRoditelja[0]))
+                    && (Integer.parseInt(koordinate[0]) < Integer.parseInt(koordinateRoditelja[2]))
+                    && (Integer.parseInt(koordinate[2]) <= Integer.parseInt(koordinateRoditelja[2]))
+                    && (Integer.parseInt(koordinate[1]) < Integer.parseInt(koordinateRoditelja[1]))
+                    &&  (Integer.parseInt(koordinate[3])> Integer.parseInt(koordinateRoditelja[1]))
+                    && (Integer.parseInt(koordinate[3]) <= Integer.parseInt(koordinateRoditelja[3]))
+                    || (Integer.parseInt(koordinate[0]) < Integer.parseInt(koordinateRoditelja[0]))
+                    && (Integer.parseInt(koordinate[2]) > Integer.parseInt(koordinateRoditelja[0]))
+                    && (Integer.parseInt(koordinate[2]) <= Integer.parseInt(koordinateRoditelja[2]))
+                    && (Integer.parseInt(koordinate[1]) >= Integer.parseInt(koordinateRoditelja[1]))
+                    &&  (Integer.parseInt(koordinate[1])< Integer.parseInt(koordinateRoditelja[3]))
+                    && (Integer.parseInt(koordinate[3]) > Integer.parseInt(koordinateRoditelja[3]))
+                    || (Integer.parseInt(koordinate[0]) >= Integer.parseInt(koordinateRoditelja[0]))
+                    && (Integer.parseInt(koordinate[0]) < Integer.parseInt(koordinateRoditelja[3]))
+                    && (Integer.parseInt(koordinate[2]) > Integer.parseInt(koordinateRoditelja[2]))
+                    && (Integer.parseInt(koordinate[1]) >= Integer.parseInt(koordinateRoditelja[1]))
+                    &&  (Integer.parseInt(koordinate[1])< Integer.parseInt(koordinateRoditelja[3]))
+                    && (Integer.parseInt(koordinate[3]) > Integer.parseInt(koordinateRoditelja[3]))
+                    )) {
+                System.out.println("siječe i x i y os");
+            }
+            
 
             System.out.println(element.getSifra() + Arrays.toString(element.getKoordinate()) + Arrays.toString(element.getKoordinateRoditelja()));
 
