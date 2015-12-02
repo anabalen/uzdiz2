@@ -130,15 +130,14 @@ public class DatotekaHandler {
                 element.setGreska("neispravna dužina polja");
                 element.setErrorIspravnostiZapisa(false);
             }
-            
-            
+
             //ako je neispravan roditelj - onda je i dijete
-            for(int i=0; i<listaNeispravnihElemenata.size(); i++){
-                if(element.getRoditelj() == listaNeispravnihElemenata.get(i).getSifra()){
+            for (int i = 0; i < listaNeispravnihElemenata.size(); i++) {
+                if (element.getRoditelj() == listaNeispravnihElemenata.get(i).getSifra()) {
                     element.setGreska("Neispravan roditelj");
                     element.setErrorIspravnostiZapisa(false);
                 }
-            }            
+            }
 
             //provjera je li broj koordinata 3, 4 ili 2i
             if (element.getKoordinate().length == 3 || element.getKoordinate().length == 4 || (element.getKoordinate().length % 2) == 0) {
@@ -176,19 +175,16 @@ public class DatotekaHandler {
             }
 
             //provjera je li jednostavan element sadržan u složenom koji postoji
-
             if (element.getTip() == 1) {
-                if((listaRoditelja.contains(element.getRoditelj())== false)){
-                element.setErrorIspravnostiZapisa(false);
-                element.setGreska("Roditelj ne postoji");
-            }}
-
-            
-          
+                if ((listaRoditelja.contains(element.getRoditelj()) == false)) {
+                    element.setErrorIspravnostiZapisa(false);
+                    element.setGreska("Roditelj ne postoji");
+                }
+            }
 
             //dohvaćanje koordinata roditelja za pojedini element u listi
-            for (int i = 0; i < listaElemenata.size(); i++) { 
-                
+            for (int i = 0; i < listaElemenata.size(); i++) {
+
                 int roditelj = element.getRoditelj();
                 int el1 = listaElemenata.get(i).getSifra();
                 String[] koord = listaElemenata.get(i).getKoordinate();
@@ -207,76 +203,74 @@ public class DatotekaHandler {
             }
 
             //provjeri presjeke samo za elemente koji su ispravni
-            if(element.getErrorIspravnostiZapisa()==true){
+            if (element.getErrorIspravnostiZapisa() == true) {
 
-            int velicina = koordinate.length;
-            koordinateRoditelja = element.getKoordinateRoditelja();
+                int velicina = koordinate.length;
+                koordinateRoditelja = element.getKoordinateRoditelja();
 
-            //provjera siječe li dijete element roditelja
-            if (velicina == 4 && (((Integer.parseInt(koordinate[0])+Integer.parseInt(koordinateRoditelja[0])) < Integer.parseInt(koordinateRoditelja[0]))
-                    && ((Integer.parseInt(koordinate[2])+Integer.parseInt(koordinateRoditelja[0])) > Integer.parseInt(koordinateRoditelja[0]))
-                    && ((Integer.parseInt(koordinate[2])+Integer.parseInt(koordinateRoditelja[0])) <= Integer.parseInt(koordinateRoditelja[2]))
-                    || ((Integer.parseInt(koordinate[0])+Integer.parseInt(koordinateRoditelja[0])) >= Integer.parseInt(koordinateRoditelja[0]))
-                    && ((Integer.parseInt(koordinate[0])+Integer.parseInt(koordinateRoditelja[0])) < Integer.parseInt(koordinateRoditelja[2]))
-                    && ((Integer.parseInt(koordinate[2])+Integer.parseInt(koordinateRoditelja[0])) > Integer.parseInt(koordinateRoditelja[2])))) {
-                //System.out.println(element.getSifra() + " siječe x os");
-                presjek = " Siječe x os.";
-                element.setPresjek(presjek);
-            }
-
-            if (velicina == 4 && (((Integer.parseInt(koordinate[1]) + Integer.parseInt(koordinateRoditelja[1])) < Integer.parseInt(koordinateRoditelja[1]))
-                    && ((Integer.parseInt(koordinate[3]) + Integer.parseInt(koordinateRoditelja[1])) > Integer.parseInt(koordinateRoditelja[1]))
-                    && ((Integer.parseInt(koordinate[3]) + Integer.parseInt(koordinateRoditelja[1])) <= Integer.parseInt(koordinateRoditelja[3]))
-                    || ((Integer.parseInt(koordinate[1]) + Integer.parseInt(koordinateRoditelja[1])) >= Integer.parseInt(koordinateRoditelja[1]))
-                    && ((Integer.parseInt(koordinate[1]) + Integer.parseInt(koordinateRoditelja[1])) < Integer.parseInt(koordinateRoditelja[3]))
-                    && ((Integer.parseInt(koordinate[3]) + Integer.parseInt(koordinateRoditelja[1])) > Integer.parseInt(koordinateRoditelja[3])))) {
-                //System.out.println(element.getSifra() + " siječe y os");
-                presjek = presjek + " Siječe y os.";
-                element.setPresjek(presjek);
-            }
-            
-            if(velicina == 4){
-                if((Integer.parseInt(koordinate[0]) != Integer.parseInt(koordinate[2]))
-                    && (Integer.parseInt(koordinate[1]) != Integer.parseInt(koordinate[3]))){
-                    
-                }else{
-                    element.setErrorIspravnostiZapisa(false);
-                    element.setGreska("Nije geometrijski lik");
+                //provjera siječe li dijete element roditelja
+                if (velicina == 4 && (((Integer.parseInt(koordinate[0]) + Integer.parseInt(koordinateRoditelja[0])) < Integer.parseInt(koordinateRoditelja[0]))
+                        && ((Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[0])) > Integer.parseInt(koordinateRoditelja[0]))
+                        && ((Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[0])) <= Integer.parseInt(koordinateRoditelja[2]))
+                        || ((Integer.parseInt(koordinate[0]) + Integer.parseInt(koordinateRoditelja[0])) >= Integer.parseInt(koordinateRoditelja[0]))
+                        && ((Integer.parseInt(koordinate[0]) + Integer.parseInt(koordinateRoditelja[0])) < Integer.parseInt(koordinateRoditelja[2]))
+                        && ((Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[0])) > Integer.parseInt(koordinateRoditelja[2])))) {
+                    //System.out.println(element.getSifra() + " siječe x os");
+                    presjek = " Siječe x os.";
+                    element.setPresjek(presjek);
                 }
-            }
 
-            
-            
-            if (velicina == 3 && (((Integer.parseInt(koordinate[0])-Integer.parseInt(koordinate[2])+Integer.parseInt(koordinateRoditelja[0])) < Integer.parseInt(koordinateRoditelja[0]))
-                    && ((Integer.parseInt(koordinate[0])+Integer.parseInt(koordinate[2])+Integer.parseInt(koordinateRoditelja[0])) > Integer.parseInt(koordinateRoditelja[0]))
-                    && ((Integer.parseInt(koordinate[0])+Integer.parseInt(koordinate[2])+Integer.parseInt(koordinateRoditelja[0])) <= Integer.parseInt(koordinateRoditelja[2]))
-                    || ((Integer.parseInt(koordinate[0])+Integer.parseInt(koordinate[2])+Integer.parseInt(koordinateRoditelja[0])) > Integer.parseInt(koordinateRoditelja[2]))
-                    && ((Integer.parseInt(koordinate[0])-Integer.parseInt(koordinate[2])+Integer.parseInt(koordinateRoditelja[0])) < Integer.parseInt(koordinateRoditelja[2]))
-                    && ((Integer.parseInt(koordinate[0])-Integer.parseInt(koordinate[2])+Integer.parseInt(koordinateRoditelja[0])) <= Integer.parseInt(koordinateRoditelja[0])))) {
+                if (velicina == 4 && (((Integer.parseInt(koordinate[1]) + Integer.parseInt(koordinateRoditelja[1])) < Integer.parseInt(koordinateRoditelja[1]))
+                        && ((Integer.parseInt(koordinate[3]) + Integer.parseInt(koordinateRoditelja[1])) > Integer.parseInt(koordinateRoditelja[1]))
+                        && ((Integer.parseInt(koordinate[3]) + Integer.parseInt(koordinateRoditelja[1])) <= Integer.parseInt(koordinateRoditelja[3]))
+                        || ((Integer.parseInt(koordinate[1]) + Integer.parseInt(koordinateRoditelja[1])) >= Integer.parseInt(koordinateRoditelja[1]))
+                        && ((Integer.parseInt(koordinate[1]) + Integer.parseInt(koordinateRoditelja[1])) < Integer.parseInt(koordinateRoditelja[3]))
+                        && ((Integer.parseInt(koordinate[3]) + Integer.parseInt(koordinateRoditelja[1])) > Integer.parseInt(koordinateRoditelja[3])))) {
+                    //System.out.println(element.getSifra() + " siječe y os");
+                    presjek = presjek + " Siječe y os.";
+                    element.setPresjek(presjek);
+                }
+
+                if (velicina == 4) {
+                    if ((Integer.parseInt(koordinate[0]) != Integer.parseInt(koordinate[2]))
+                            && (Integer.parseInt(koordinate[1]) != Integer.parseInt(koordinate[3]))) {
+
+                    } else {
+                        element.setErrorIspravnostiZapisa(false);
+                        element.setGreska("Nije geometrijski lik");
+                    }
+                }
+
+                if (velicina == 3 && (((Integer.parseInt(koordinate[0]) - Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[0])) < Integer.parseInt(koordinateRoditelja[0]))
+                        && ((Integer.parseInt(koordinate[0]) + Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[0])) > Integer.parseInt(koordinateRoditelja[0]))
+                        && ((Integer.parseInt(koordinate[0]) + Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[0])) <= Integer.parseInt(koordinateRoditelja[2]))
+                        || ((Integer.parseInt(koordinate[0]) + Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[0])) > Integer.parseInt(koordinateRoditelja[2]))
+                        && ((Integer.parseInt(koordinate[0]) - Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[0])) < Integer.parseInt(koordinateRoditelja[2]))
+                        && ((Integer.parseInt(koordinate[0]) - Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[0])) <= Integer.parseInt(koordinateRoditelja[0])))) {
                 //System.out.println(element.getSifra() + " siječe x os");
-                
-                presjek = " Siječe x os.";
-                element.setPresjek(presjek);
-            }
-            
-            if (velicina == 3 && (((Integer.parseInt(koordinate[1]) - Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[1])) < Integer.parseInt(koordinateRoditelja[1]))
-                    && ((Integer.parseInt(koordinate[1]) + Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[1])) > Integer.parseInt(koordinateRoditelja[1]))
-                    && ((Integer.parseInt(koordinate[1]) + Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[1])) <= Integer.parseInt(koordinateRoditelja[3]))
-                    || ((Integer.parseInt(koordinate[1]) + Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[1])) > Integer.parseInt(koordinateRoditelja[3]))
-                    && ((Integer.parseInt(koordinate[1]) - Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[1])) < Integer.parseInt(koordinateRoditelja[3]))
-                    && ((Integer.parseInt(koordinate[1]) - Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[1])) >= Integer.parseInt(koordinateRoditelja[1])))) {
-               // System.out.println(element.getSifra() + " siječe y os");
-                
-                presjek = presjek + " Siječe y os.";
-                element.setPresjek(presjek);
-            }
 
-            // provjera siječe li poliedar granice
-            for (int i = 0; i > 2; i++) {
-                    if (velicina == 2 * i && (((Integer.parseInt(koordinate[0])+Integer.parseInt(koordinate[0])) < Integer.parseInt(koordinateRoditelja[0]))
-                            || ((Integer.parseInt(koordinate[2])+Integer.parseInt(koordinate[0])) < Integer.parseInt(koordinateRoditelja[0]))
-                            || ((Integer.parseInt(koordinate[i+1])+Integer.parseInt(koordinate[0])) < Integer.parseInt(koordinateRoditelja[0]))
-                            || ((Integer.parseInt(koordinate[4])+Integer.parseInt(koordinate[0])) < Integer.parseInt(koordinateRoditelja[0]))
+                    presjek = " Siječe x os.";
+                    element.setPresjek(presjek);
+                }
+
+                if (velicina == 3 && (((Integer.parseInt(koordinate[1]) - Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[1])) < Integer.parseInt(koordinateRoditelja[1]))
+                        && ((Integer.parseInt(koordinate[1]) + Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[1])) > Integer.parseInt(koordinateRoditelja[1]))
+                        && ((Integer.parseInt(koordinate[1]) + Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[1])) <= Integer.parseInt(koordinateRoditelja[3]))
+                        || ((Integer.parseInt(koordinate[1]) + Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[1])) > Integer.parseInt(koordinateRoditelja[3]))
+                        && ((Integer.parseInt(koordinate[1]) - Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[1])) < Integer.parseInt(koordinateRoditelja[3]))
+                        && ((Integer.parseInt(koordinate[1]) - Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinateRoditelja[1])) >= Integer.parseInt(koordinateRoditelja[1])))) {
+               // System.out.println(element.getSifra() + " siječe y os");
+
+                    presjek = presjek + " Siječe y os.";
+                    element.setPresjek(presjek);
+                }
+
+                // provjera siječe li poliedar granice
+                for (int i = 0; i > 2; i++) {
+                    if (velicina == 2 * i && (((Integer.parseInt(koordinate[0]) + Integer.parseInt(koordinate[0])) < Integer.parseInt(koordinateRoditelja[0]))
+                            || ((Integer.parseInt(koordinate[2]) + Integer.parseInt(koordinate[0])) < Integer.parseInt(koordinateRoditelja[0]))
+                            || ((Integer.parseInt(koordinate[i + 1]) + Integer.parseInt(koordinate[0])) < Integer.parseInt(koordinateRoditelja[0]))
+                            || ((Integer.parseInt(koordinate[4]) + Integer.parseInt(koordinate[0])) < Integer.parseInt(koordinateRoditelja[0]))
                             || (Integer.parseInt(koordinate[i]) <= Integer.parseInt(koordinateRoditelja[2]))
                             || (Integer.parseInt(koordinate[i + 2]) >= Integer.parseInt(koordinateRoditelja[0]))
                             || (Integer.parseInt(koordinate[i + 2]) <= Integer.parseInt(koordinateRoditelja[2]))
@@ -287,8 +281,8 @@ public class DatotekaHandler {
 
                         //System.out.println("poliedar");
                     }
-            }
-            
+                }
+
             }
             /* 
             
@@ -297,39 +291,37 @@ public class DatotekaHandler {
              listaRoditelja.remove(i);
                     
              }
-            }
-              */
-            
-            if(element.getErrorIspravnostiZapisa()==false){
+             }
+             */
+
+            if (element.getErrorIspravnostiZapisa() == false) {
                 listaNeispravnihElemenata.add(element);
-            }
-            else{
+            } else {
                 listaIspravnihElemenata.add(element);
             }
-            
+
             //System.out.println(element.getSifra() + " " + element.getErrorIspravnostiZapisa() + " " + element.getGreska() + " " + element.getTestPoruka());
-
         }
 
-         System.out.println( "Lista ispravnih elemenata: " + "\n" +
-                                "=========================================================");
-        for(int i = 0; i < listaIspravnihElemenata.size(); i++){
-            System.out.println(listaIspravnihElemenata.get(i).getSifra() + "\t" +
-                                listaIspravnihElemenata.get(i).getRoditelj() + "\t" +
-                                Arrays.toString(listaIspravnihElemenata.get(i).getKoordinate()) + "\t" +
-                                listaIspravnihElemenata.get(i).getBoja() + "\t" +
-                                listaIspravnihElemenata.get(i).getPresjek());
+        System.out.println("Lista ispravnih elemenata: " + "\n"
+                + "=========================================================");
+        for (int i = 0; i < listaIspravnihElemenata.size(); i++) {
+            System.out.println(listaIspravnihElemenata.get(i).getSifra() + "\t"
+                    + listaIspravnihElemenata.get(i).getRoditelj() + "\t"
+                    + Arrays.toString(listaIspravnihElemenata.get(i).getKoordinate()) + "\t"
+                    + listaIspravnihElemenata.get(i).getBoja() + "\t"
+                    + listaIspravnihElemenata.get(i).getPresjek());
         }
-        
-         System.out.println( "\n Lista neispravnih elemenata: " + "\n" +
-                                "=========================================================");
-        for(int i = 0; i < listaNeispravnihElemenata.size(); i++){
-            System.out.println( listaNeispravnihElemenata.get(i).getGreska() + "\t" +
-                                listaNeispravnihElemenata.get(i).getSifra() + "\t" +
-                                listaNeispravnihElemenata.get(i).getRoditelj() + "\t" +
-                                Arrays.toString(listaNeispravnihElemenata.get(i).getKoordinate()) + "\t" +
-                                listaNeispravnihElemenata.get(i).getBoja()
-                                );
+
+        System.out.println("\n Lista neispravnih elemenata: " + "\n"
+                + "=========================================================");
+        for (int i = 0; i < listaNeispravnihElemenata.size(); i++) {
+            System.out.println(listaNeispravnihElemenata.get(i).getGreska() + "\t"
+                    + listaNeispravnihElemenata.get(i).getSifra() + "\t"
+                    + listaNeispravnihElemenata.get(i).getRoditelj() + "\t"
+                    + Arrays.toString(listaNeispravnihElemenata.get(i).getKoordinate()) + "\t"
+                    + listaNeispravnihElemenata.get(i).getBoja()
+            );
         }
     }
 
@@ -368,7 +360,6 @@ public class DatotekaHandler {
         ucitajDatoteku();
 
         //System.out.println(this.listaElemenata);
-
         startMenu();
 
     }
