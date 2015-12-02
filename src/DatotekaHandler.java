@@ -1,7 +1,12 @@
-
 import Composite.IElement;
 import Composite.JednostavniElement;
 import Composite.SlozeniElement;
+import Memento.CareTaker;
+import Memento.Originator;
+import State.Context;
+import State.PrikaziElement;
+import State.SakrijElement;
+import State.State;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -27,7 +32,9 @@ public class DatotekaHandler {
     List<IElement> listaSlozenihElemenata = new ArrayList<>();
     IElement slozeniElement = null;
     IElement jednostavniElement = null;
-    String presjek;
+    String presjek = null;
+    Originator originator = new Originator();
+    CareTaker careTaker = new CareTaker();
 
     public DatotekaHandler(String datoteka) {
         this.datoteka = datoteka;
@@ -60,28 +67,26 @@ public class DatotekaHandler {
     private void odabir() {
         switch (n) {
             case 1:
-                System.out.println("Odabir 1.");
-                pregledStanja();
-                //startMenu();
+                //pregledStanja();
+                ispisStanja();
                 break;
             case 2:
-                System.out.println("Odabir 2.");
                 startMenu();
                 break;
             case 3:
-                System.out.println("Odabir 3.");
-                startMenu();
+                promjenaStatusa();
                 break;
             case 4:
-                System.out.println("Odabir 4.");
                 startMenu();
                 break;
             case 5:
-                System.out.println("Odabir 5.");
                 dodajDatoteku();
                 break;
+            case 6:
+                povratStanja();
+                break;
             case 0:
-                System.out.println("Odabir 0. Kraj programa.");
+                System.out.println("Kraj programa.");
                 System.exit(n);
                 break;
 
@@ -107,7 +112,6 @@ public class DatotekaHandler {
 
     private void validiraj(BufferedReader fajl) throws IOException {
         String line;
-        //List<Element> listaElemenata = new ArrayList<Element>();
         List<Integer> sifre = new ArrayList<>();
 
         while ((line = fajl.readLine()) != null) {
@@ -115,12 +119,11 @@ public class DatotekaHandler {
             String[] values = line.split("\t");
             Boolean errorIspravnostiZapisa = true;
             String error = "";
-            String testPoruka = "";
             String[] koordinateRoditelja = null;
 
             String[] koordinate = values[3].split(",");
 
-            Element element = new Element(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4], errorIspravnostiZapisa, error, testPoruka, koordinateRoditelja);
+            Element element = new Element(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4], errorIspravnostiZapisa, error, presjek, koordinateRoditelja);
             listaElemenata.add(element);
 
             //ispitivanje ispravnosti dužine polja
@@ -130,7 +133,7 @@ public class DatotekaHandler {
                 element.setGreska("neispravna dužina polja");
                 element.setErrorIspravnostiZapisa(false);
             }
-
+            
             //ako je neispravan roditelj - onda je i dijete
             for (int i = 0; i < listaNeispravnihElemenata.size(); i++) {
                 if (element.getRoditelj() == listaNeispravnihElemenata.get(i).getSifra()) {
@@ -149,13 +152,13 @@ public class DatotekaHandler {
             }
 
             if (Integer.parseInt(values[0]) == 0) {
-                slozeniElement = new SlozeniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4]);
+                slozeniElement = new SlozeniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4], errorIspravnostiZapisa, error,  presjek, koordinateRoditelja);
                 listaSlozenihElemenata.add(slozeniElement);
                 // System.out.println(slozeniElement);
                 dodavanjeDjece(2);
 
             } else {
-                jednostavniElement = new JednostavniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4]);
+                jednostavniElement = new JednostavniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4], errorIspravnostiZapisa, error, presjek, koordinateRoditelja);
                 dodavanjeDjece(1);
             }
 
@@ -284,15 +287,7 @@ public class DatotekaHandler {
                 }
 
             }
-            /* 
             
-             for(int i = 0; i < listaRoditelja.size(); i++){
-             if(listaRoditelja.get(i).getErrorIspravnostiZapisa()==false){
-             listaRoditelja.remove(i);
-                    
-             }
-             }
-             */
 
             if (element.getErrorIspravnostiZapisa() == false) {
                 listaNeispravnihElemenata.add(element);
@@ -303,26 +298,12 @@ public class DatotekaHandler {
             //System.out.println(element.getSifra() + " " + element.getErrorIspravnostiZapisa() + " " + element.getGreska() + " " + element.getTestPoruka());
         }
 
-        System.out.println("Lista ispravnih elemenata: " + "\n"
-                + "=========================================================");
-        for (int i = 0; i < listaIspravnihElemenata.size(); i++) {
-            System.out.println(listaIspravnihElemenata.get(i).getSifra() + "\t"
-                    + listaIspravnihElemenata.get(i).getRoditelj() + "\t"
-                    + Arrays.toString(listaIspravnihElemenata.get(i).getKoordinate()) + "\t"
-                    + listaIspravnihElemenata.get(i).getBoja() + "\t"
-                    + listaIspravnihElemenata.get(i).getPresjek());
-        }
+        ispisStanja();
+        
+        
+        
 
-        System.out.println("\n Lista neispravnih elemenata: " + "\n"
-                + "=========================================================");
-        for (int i = 0; i < listaNeispravnihElemenata.size(); i++) {
-            System.out.println(listaNeispravnihElemenata.get(i).getGreska() + "\t"
-                    + listaNeispravnihElemenata.get(i).getSifra() + "\t"
-                    + listaNeispravnihElemenata.get(i).getRoditelj() + "\t"
-                    + Arrays.toString(listaNeispravnihElemenata.get(i).getKoordinate()) + "\t"
-                    + listaNeispravnihElemenata.get(i).getBoja()
-            );
-        }
+        
     }
 
     private void dodavanjeDjece(int n) {
@@ -333,6 +314,7 @@ public class DatotekaHandler {
                 case 1: //dodavanje jednostavnog elementa roditelju
                     if (slozElem != null && jednostavniElement != null && slozElem.getSifra() == jednostavniElement.getRoditelj()) {
                         slozElem.add(jednostavniElement);
+                                
                         //System.out.println("dodavanje jednostavnog");
                     }
                     break;
@@ -346,11 +328,19 @@ public class DatotekaHandler {
 
             List<IElement> test = slozElem.getElementi();
              for(int j=0;j<test.size();j++){
-             test.get(j).getRoditelj();//evoti mozes getat šta hoćeš
-             System.out.println("Struktura roditelja s djecom:"+slozElem.getSifra()+"   "+test.get(j).getSifra());
+             test.get(j).getRoditelj(); // getat što god
+             System.out.println(slozElem.getSifra()+"   "+test.get(j).getSifra() + "    "+ test.get(j).getRoditelj() + "    " + Arrays.toString(test.get(j).getKoordinate()));
              }
+             
+             
             
         }
+        
+        //spremimo stanje listeElemenata za Memento svaki put kada se promijeni lista
+        // ************************************************************************************************
+        //ne mogu u listu stanja spremiti listu elemenata
+        // - >    originator.setState(this.listaElemenata);
+         careTaker.add(originator.saveStateToMemento());
 
     }
 
@@ -381,5 +371,75 @@ public class DatotekaHandler {
 
         startMenu();
     }
+    
+    private void promjenaStatusa() {
+          
+        System.out.println("Unesite šifru elementa kojem želite promijeniti status: ");
+        Scanner reader = new Scanner(System.in);
+        int sifraZaPromjenu = reader.nextInt();
+        
+        System.out.println("Unesite 0 ako želite da je stanje sakriveno, 1 za aktivno: ");
+        int stanje = reader.nextInt();
+        
+       for (int i = 0; i < listaElemenata.size(); i++) {
+            if(listaElemenata.get(i).getSifra()==sifraZaPromjenu){
+                if(stanje==0){
+                    listaElemenata.get(i).setErrorIspravnostiZapisa(false);
+                    
+                }else{
+                    listaElemenata.get(i).setErrorIspravnostiZapisa(true);
+                }
+            } System.out.println(listaElemenata.get(i).getSifra() + " " + listaElemenata.get(i).getErrorIspravnostiZapisa());
+        }
+  
+        
+            Context context = new Context();
+
+            PrikaziElement prikazi = new PrikaziElement();
+            prikazi.doAction(context);
+
+            System.out.println(context.getState().toString());
+
+            SakrijElement sakrij = new SakrijElement();
+            sakrij.doAction(context);
+
+            System.out.println(context.getState().toString());
+       
+
+        startMenu();
+    }
+    
+    
+    
+    private void povratStanja() {
+        // povrat stanja s Mementom na prvo ucitano iz datoteke
+        originator.getStateFromMemento(careTaker.get(0));
+
+        startMenu();
+    }
+
+    private void ispisStanja() {
+        System.out.println("Lista ispravnih elemenata: " + "\n"
+                + "=========================================================");
+        for (int i = 0; i < listaIspravnihElemenata.size(); i++) {
+            System.out.println(listaIspravnihElemenata.get(i).getSifra() + "\t"
+                    + listaIspravnihElemenata.get(i).getRoditelj() + "\t"
+                    + Arrays.toString(listaIspravnihElemenata.get(i).getKoordinate()) + "\t"
+                    + listaIspravnihElemenata.get(i).getBoja() + "\t"
+                    + listaIspravnihElemenata.get(i).getPresjek());
+        }
+
+        System.out.println("\n Lista neispravnih elemenata: " + "\n"
+                + "=========================================================");
+        for (int i = 0; i < listaNeispravnihElemenata.size(); i++) {
+            System.out.println(listaNeispravnihElemenata.get(i).getGreska() + "\t"
+                    + listaNeispravnihElemenata.get(i).getSifra() + "\t"
+                    + listaNeispravnihElemenata.get(i).getRoditelj() + "\t"
+                    + Arrays.toString(listaNeispravnihElemenata.get(i).getKoordinate()) + "\t"
+                    + listaNeispravnihElemenata.get(i).getBoja()
+            );
+        }
+    }
+    
 
 }

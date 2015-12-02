@@ -13,5 +13,6 @@ public interface IElement {
     public int getRoditelj();
     public String[] getKoordinate();
     public String getBoja();
+  
     public void print();
 }

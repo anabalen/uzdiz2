@@ -11,14 +11,21 @@ public class JednostavniElement implements IElement{
     private int roditelj;
     private String[] koordinate;
     private String boja;
-    
-    
-    public JednostavniElement(int tipZapisa, int sifraZapisa, int roditelj, String[] koordinate, String boja){
+    Boolean errorIspravnostiZapisa;
+    String error;
+    String presjek;
+    String[] koordinateRoditelja;
+ 
+    public JednostavniElement(int tipZapisa, int sifraZapisa, int roditelj, String[] koordinate, String boja, Boolean errorIspravnostiZapisa, String error, String presjek, String[] koordinateRoditelja){
        this.tip = tipZapisa;
        this.sifra = sifraZapisa;
        this.roditelj = roditelj;
        this.koordinate = koordinate;
        this.boja = boja;
+       this.errorIspravnostiZapisa = errorIspravnostiZapisa;
+       this.error = error;
+       this.presjek = presjek;
+       this.koordinateRoditelja = koordinateRoditelja;
     }
             
     @Override
@@ -56,9 +63,44 @@ public class JednostavniElement implements IElement{
         return boja;
     }
 
+    public Boolean getErrorIspravnostiZapisa() {
+        return errorIspravnostiZapisa;
+    }
+
+    public String getError() {
+        return error;
+    }
+    
+
+    public String getPresjek() {
+        return presjek;
+    }
+
+    public String[] getKoordinateRoditelja() {
+        return koordinateRoditelja;
+    }
+
+    public void setErrorIspravnostiZapisa(Boolean errorIspravnostiZapisa) {
+        this.errorIspravnostiZapisa = errorIspravnostiZapisa;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public void setPresjek(String presjek) {
+        this.presjek = presjek;
+    }
+
+    public void setKoordinateRoditelja(String[] koordinateRoditelja) {
+        this.koordinateRoditelja = koordinateRoditelja;
+    }
+    
+    
+
     @Override
     public void print() {
-        System.out.println(sifra + " " + roditelj + " " + koordinate + " " + boja);
+        System.out.println(sifra + " " + roditelj + " " + koordinate + " " + boja + " " + presjek);
     }
     
 }
