@@ -20,7 +20,7 @@ public class DatotekaHandler {
     private String datoteka;
     public int n;
     List<Element> listaElemenata = new ArrayList<>();
-    List<Element> listaRoditelja = new ArrayList<>();
+    List<Integer> listaRoditelja = new ArrayList<>();
     List<Element> listaElemenataIspravnihRoditelja = new ArrayList<>();
     List<Element> listaIspravnihElemenata = new ArrayList<>();
     List<Element> listaNeispravnihElemenata = new ArrayList<>();
@@ -130,6 +130,8 @@ public class DatotekaHandler {
                 element.setErrorIspravnostiZapisa(false);
             }
             
+            
+            //ako je neispravan roditelj - onda je i dijete
             for(int i=0; i<listaNeispravnihElemenata.size(); i++){
                 if(element.getRoditelj() == listaNeispravnihElemenata.get(i).getSifra()){
                     element.setGreska("Neispravan roditelj");
@@ -169,20 +171,15 @@ public class DatotekaHandler {
 
             //dodavanje roditelja na listu
             if (element.getTip() == 0) {
-                listaRoditelja.add(element);
+                listaRoditelja.add(element.getSifra());
             }
 
-            //provjera je li jednostavan element sadržan u složenom
-            if (element.getTip() == 1) {
-                for (int i = 0; i < listaRoditelja.size(); i++) {
-                    if (listaRoditelja.get(i).getSifra() == element.getRoditelj()) {
-                        listaElemenataIspravnihRoditelja.add(element);
-                    }
-                }
+            //provjera je li jednostavan element sadržan u složenom koji postoji
+
+            if ((element.getTip() == 1) && (listaRoditelja.contains(element.getRoditelj())== false)) {
+                element.setErrorIspravnostiZapisa(false);
             }
-            
-                    
-            
+
             //postoji li roditelj
           
 
@@ -218,7 +215,7 @@ public class DatotekaHandler {
             //provjera je su li koordinate elementa relativne unutar roditeljskog elementa
             int velicina = koordinate.length;
             koordinateRoditelja = element.getKoordinateRoditelja();
-
+/*
             //provjera je li dijete pravokutnik unutar roditeljskog elementa i jesu li tocke elementa ispravno zadane da tvore pravokutnik
             if (velicina == 4 && ((((Integer.parseInt(koordinate[0]) >= Integer.parseInt(koordinateRoditelja[0]))
                     && (Integer.parseInt(koordinate[0]) <= Integer.parseInt(koordinateRoditelja[2]))
@@ -304,7 +301,7 @@ public class DatotekaHandler {
                 System.out.println("siječe i x i y os");
             }
 
-       
+*/       
             /* 
             
              for(int i = 0; i < listaRoditelja.size(); i++){
