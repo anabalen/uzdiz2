@@ -344,7 +344,12 @@ public class DatotekaHandler {
                     break;
             }
 
-            System.out.println("Struktura roditelja s djecom: " + slozElem.getElementi());
+            List<IElement> test = slozElem.getElementi();
+             for(int j=0;j<test.size();j++){
+             test.get(j).getRoditelj();//evoti mozes getat šta hoćeš
+             System.out.println("Struktura roditelja s djecom:"+slozElem.getSifra()+"   "+test.get(j).getSifra());
+             }
+            
         }
 
     }
