@@ -14,10 +14,10 @@ public class Element {
     private String boja;
     Boolean errorIspravnostiZapisa;
     String greska;
-    String testPorukaValidacije;
     String[] koordinateRoditelja;
+    String presjek;
    
-    public Element(int tipZapisa, int sifraZapisa, int roditelj, String[] koordinate, String boja, Boolean errorIspravnostiZapisa, String error, String testPorukaValidacije, String[] koordinateRoditelja){
+    public Element(int tipZapisa, int sifraZapisa, int roditelj, String[] koordinate, String boja, Boolean errorIspravnostiZapisa, String error, String presjek, String[] koordinateRoditelja){
       
         this.tip = tipZapisa;
        this.sifra = sifraZapisa;
@@ -26,8 +26,8 @@ public class Element {
        this.boja = boja;
        this.errorIspravnostiZapisa = errorIspravnostiZapisa;
        this.greska = error;
-       this.testPorukaValidacije = testPorukaValidacije;
        this.koordinateRoditelja = koordinateRoditelja;
+       this.presjek = presjek;
     }
     
     public Element(){}
@@ -60,8 +60,8 @@ public class Element {
         return greska;
     }
     
-    public String getTestPoruka(){
-        return testPorukaValidacije;
+    public String getPresjek(){
+        return presjek;
     }
 
     public String[] getKoordinateRoditelja() {
@@ -98,8 +98,8 @@ public class Element {
         this.greska = error;
     }
     
-    public void setTestPoruka(String testPorukaValidacije) {
-        this.testPorukaValidacije = testPorukaValidacije;
+    public void setPresjek(String presjek) {
+        this.presjek = presjek;
     }
 
     public void setKoordinateRoditelja(String[] koordinateRoditelja) {
