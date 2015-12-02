@@ -18,10 +18,10 @@ public class SlozeniElement implements IElement {
     public List<IElement> elementi;
     Boolean errorIspravnostiZapisa;
     String error;
-    String presjek;
+
     String[] koordinateRoditelja;
     
-    public SlozeniElement(int tipZapisa, int sifraZapisa, int roditelj, String[] koordinate, String boja, Boolean errorIspravnostiZapisa, String error, String presjek, String[] koordinateRoditelja){
+    public SlozeniElement(int tipZapisa, int sifraZapisa, int roditelj, String[] koordinate, String boja, Boolean errorIspravnostiZapisa, String error, String[] koordinateRoditelja){
        
        this.tip = tipZapisa;
        this.sifra = sifraZapisa;
@@ -31,7 +31,7 @@ public class SlozeniElement implements IElement {
        this.elementi = new ArrayList<>();
        this.errorIspravnostiZapisa = errorIspravnostiZapisa;
        this.error = error;
-       this.presjek = presjek;
+
        this.koordinateRoditelja = koordinateRoditelja;
     }
     
@@ -88,9 +88,6 @@ public class SlozeniElement implements IElement {
     }
 
 
-    public String getPresjek() {
-        return presjek;
-    }
 
     public String[] getKoordinateRoditelja() {
         return koordinateRoditelja;
@@ -104,9 +101,6 @@ public class SlozeniElement implements IElement {
         this.error = error;
     }
 
-    public void setPresjek(String presjek) {
-        this.presjek = presjek;
-    }
 
     public void setKoordinateRoditelja(String[] koordinateRoditelja) {
         this.koordinateRoditelja = koordinateRoditelja;
