@@ -150,6 +150,7 @@ public class DatotekaHandler {
                 element.setGreska(error);
                 element.setErrorIspravnostiZapisa(false);
             }
+            
 
             if (Integer.parseInt(values[0]) == 0) {
                 slozeniElement = new SlozeniElement(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), koordinate, values[4], errorIspravnostiZapisa, error, koordinateRoditelja);
