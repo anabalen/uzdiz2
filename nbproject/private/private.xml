@@ -5,8 +5,15 @@
         <group>
             <file>file:/C:/Users/Ana-Marija/Desktop/uzorci_zadaca_2/anabalen_zadaca2/src/DatotekaHandler.java</file>
             <file>file:/C:/Users/Ana-Marija/Desktop/uzorci_zadaca_2/anabalen_zadaca2/src/Composite/IElement.java</file>
+            <file>file:/C:/Users/Ana-Marija/Desktop/uzorci_zadaca_2/anabalen_zadaca2/src/State/SakrijElement.java</file>
+            <file>file:/C:/Users/Ana-Marija/Desktop/uzorci_zadaca_2/anabalen_zadaca2/src/Element/Element.java</file>
+            <file>file:/C:/Users/Ana-Marija/Desktop/uzorci_zadaca_2/anabalen_zadaca2/src/State/PrikaziElement.java</file>
+            <file>file:/C:/Users/Ana-Marija/Desktop/uzorci_zadaca_2/anabalen_zadaca2/src/Memento/Memento.java</file>
+            <file>file:/C:/Users/Ana-Marija/Desktop/uzorci_zadaca_2/anabalen_zadaca2/src/State/Context.java</file>
             <file>file:/C:/Users/Ana-Marija/Desktop/uzorci_zadaca_2/anabalen_zadaca2/src/Composite/SlozeniElement.java</file>
             <file>file:/C:/Users/Ana-Marija/Desktop/uzorci_zadaca_2/anabalen_zadaca2/src/Composite/JednostavniElement.java</file>
+            <file>file:/C:/Users/Ana-Marija/Desktop/uzorci_zadaca_2/anabalen_zadaca2/src/Memento/CareTaker.java</file>
+            <file>file:/C:/Users/Ana-Marija/Desktop/uzorci_zadaca_2/anabalen_zadaca2/src/State/State.java</file>
         </group>
     </open-files>
 </project-private>
