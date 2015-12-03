@@ -288,8 +288,12 @@ public class DatotekaHandler {
 
             }
             
-            dodavanjeIspravnojNeispravnojListi(element);
-            
+          //  dodavanjeIspravnojNeispravnojListi(element);
+            if (element.getErrorIspravnostiZapisa() == false) {
+                listaNeispravnihElemenata.add(element);
+            } else {
+                listaIspravnihElemenata.add(element);
+            }
             
 
             //System.out.println(element.getSifra() + " " + element.getErrorIspravnostiZapisa() + " " + element.getGreska() + " " + element.getTestPoruka());
@@ -297,7 +301,7 @@ public class DatotekaHandler {
 
         ispisiListe();
         
-        
+        konacnaLista = listaIspravnihElemenata;
         //spremimo stanje listeElemenata za Memento svaki put kada se promijeni lista
         // ************************************************************************************************
         //ne mogu u listu stanja spremiti listu elemenata
@@ -450,7 +454,7 @@ public class DatotekaHandler {
                 listaIspravnihElemenata.add(element);
             }
         
-         konacnaLista = listaIspravnihElemenata;
+         
          System.out.println("**********************");
          System.out.println(konacnaLista.size());
          System.out.println("**********************");
