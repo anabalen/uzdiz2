@@ -10,22 +10,22 @@ import java.util.List;
  * @author Ana-Marija
  */
 public class Originator {
-   List<Element> listaElemenata = new ArrayList<>();
+   private int stanje;
 
-   public void setState(List<Element> listaElemenata){
-      this.listaElemenata = listaElemenata;
+   public void setState(int stanje){
+      this.stanje = stanje;
    }
 
-   public List<Element> getState(){
-      return this.listaElemenata;
+   public int getState(){
+      return stanje;
    }
 
    public Memento saveStateToMemento(){
-      return new Memento(this.listaElemenata);
+      return new Memento(stanje);
    }
 
    public void getStateFromMemento(Memento Memento){
-      this.listaElemenata = Memento.getState();
+      stanje = Memento.getState();
    }
 
 }

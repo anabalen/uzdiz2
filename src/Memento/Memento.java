@@ -9,13 +9,13 @@ import java.util.List;
  * @author Ana-Marija
  */
 public class Memento {
-   List<Element> listaElemenata;
+   private int stanje;
 
-   public Memento(List<Element> listaElemenata){
-      this.listaElemenata = listaElemenata;
+   public Memento(int stanje){
+      this.stanje = stanje;
    }
 
-   public List<Element> getState(){
-      return listaElemenata;
+   public int getState(){
+      return stanje;
    }	
 }

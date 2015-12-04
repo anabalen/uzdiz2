@@ -10,8 +10,8 @@ import java.util.List;
 public class CareTaker {
    private List<Memento> mementoList = new ArrayList<Memento>();
 
-   public void add(Memento state){
-      mementoList.add(state);
+   public void add(Memento stanje){
+      mementoList.add(stanje);
    }
 
    public Memento get(int index){
